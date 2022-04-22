@@ -1,35 +1,5 @@
 #!/bin/bash
 
-##########################
-###
-### 目的：一个在每次命令行操作 git 的时候，不需要重复输入用户名、密码的脚本
-### 操作包括 git 的全部操作，以及自定义操作
-###
-### 注意：
-### 1. 该脚本使用前，必须先 cd 到对应的工程目录下
-###
-###
-###
-### 自定义操作
-### 命令名  参数          参数解释          必须
-### set     repository      仓库             Y
-###         username      用户名           Y
-###         password      密码              Y
-###         project        项目              Y
-###         lbranch        本地分支          N（默认值：master）
-###         rbranch        远程分支          N（默认值：master）
-### pull     repository    仓库               Y
-###          project        项目              Y
-###         -o origin       远程仓库别名      N
-###         -rb lbranch     远程仓库         N
-### push    repository      仓库             Y
-###          project        项目              Y
-###         -o origin       远程仓库别名      N
-###         -lb lbranch     本地仓库          N
-###         -rb lbranch     远程仓库          N
-###         -c commit     提交备注           N
-###########################
-
 inputStr="$@ " # 为了正则表达式的正确运行，最后加一个空格
 configFile="${HOME}/.mygit.config"
 
@@ -85,12 +55,12 @@ elif [ $1 = 'set' ]; then
 	fi
 
 	# 获得配置信息
-	repository=$2 # 仓库名
-	username=$3 # 用户名
-	password=$4 # 密码
-	project=$5 # 项目名
-	lbranch=$6 # 本地分支
-	rbranch=$7 # 远程分支
+	repository=`getPara '.*\(\-r [^\-]* \)' 3` # 仓库名
+	username=`getPara '.*\(\-U [^\-]* \)' 3` # 用户名
+	password=`getPara '.*\(\-P [^\-]* \)' 3` # 密码
+	project=`getPara '.*\(\-p [^\-]* \)' 3` # 项目名
+	lbranch=`getPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
+	rbranch=`getPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	readLine=''
 
 	# 在没有输入的时候，设置默认值
@@ -141,11 +111,10 @@ else
 	fi
 
 	# 定义配置
-	repository=$2 # 仓库
-	project=$3 # 项目
-	username='' # 用户名
-	password='' # 密码 
-
+	repository=`getPara '.*\(\-r [^\-]* \)' 4` # 仓库
+	project=`getPara '.*\(\-p [^\-]* \)' 4` # 项目
+	username=`getPara '.*\(\-U [^\-]* \)' 3` # 用户名
+	password=`getPara '.*\(\-P [^\-]* \)' 3` # 密码 
 	lbranch=`getPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
 	rbranch=`getPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	origin=`getPara '.*\(\-o [^\-]* \)' 3` # 远程仓库别名
