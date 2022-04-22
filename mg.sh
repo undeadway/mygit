@@ -47,7 +47,6 @@ doPull () {
 }
 
 doPush () {
-	gco $2
 	git add .
 	git commit -m "$4"
 	git push $1 $3
