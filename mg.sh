@@ -154,6 +154,10 @@ else
 		fi
 	done < $configFile
 
+	if [ ! -n "$origin" ]; then
+		origin='origin'
+	fi
+
 	if [ readExist = false ]; then
 		echo "仓库：${repository} 、项目：${project} 的配置未定义，请先定义配置。"
 		exit
