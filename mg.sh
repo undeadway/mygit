@@ -56,8 +56,8 @@ elif [ $1 = 'set' ]; then
 	fi
 
 	# 获得配置信息
-	repository=`getPara '.*\(\-r [^\-]* \)' 3` # 仓库名
-	username=`getPara '.*\(\-U [^\-]* \)' 3` # 用户名
+	repository=$2 # 仓库名
+	username=$3 # 用户名
 	password=`getPara '.*\(\-P [^\-]* \)' 3` # 密码
 	project=`getPara '.*\(\-p [^\-]* \)' 3` # 项目名
 	lbranch=`getPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
