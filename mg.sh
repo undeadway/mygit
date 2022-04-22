@@ -17,6 +17,7 @@ doPull () {
 }
 
 doPush () {
+	echo "1:", $1,"2:",  $2, "3:", $3, "4:", $4
 	git add .
 	git commit -m "$4"
 	git push $1 $3
@@ -161,9 +162,9 @@ else
 	if [ $1 = 'pull' ]; then
 		# 采用函数的原因，是也可以获得返回值等方式
 		# 且每个处理各自独立，不会产生代码污染
-		doPull $origin $rbranch 
+		doPull "$origin" "$rbranch" 
 	elif [ $1 = 'push' ]; then
-		doPush $origin $lbranch $rbranch $commit
+		doPush "$origin" "$lbranch" "$rbranch" "$commit"
 	else
 		echo '非法的操作'
 	fi
