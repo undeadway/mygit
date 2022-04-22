@@ -156,7 +156,6 @@ else
 		fi
 
 		array=(${line// / })
-		echo $repository, ${array[0]}, $project, ${array[3]}
 		if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
 			readExist=true
 			username=${array[1]}
