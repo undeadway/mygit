@@ -15,14 +15,14 @@
 | | username | 用户名 | Y |
 | | password | 密码 | Y |
 | | project | 项目 | Y |
-| | lbranch | | 本地分支 | N（默认值：master） |
+| | lbranch | 本地分支 | N（默认值：master） |
 | | rbranch | 远程分支 | N（默认值：master） |
 | pull | repository | 仓库 | Y |
 | | project | 项目 | Y |
 | | -o origin | 远程仓库别名 | N |
 | | -rb lbranch | 远程仓库 | N |
 | push | repository | 仓库 | Y |
-| | project | 项目 | | Y |
+| | project | 项目 | Y |
 | | -o origin | 远程仓库别名 | N |
 | | -lb lbranch | 本地仓库 | N |
 | | -rb lbranch | 远程仓库 | N |
