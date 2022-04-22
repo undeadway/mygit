@@ -124,8 +124,9 @@ else
 	readExist=false
 
 	if [ ! -n "$commit" ]; then
-		dat=`date +%Y-%m-%d~%H:%M:%S`
-		commit="$dat 的提交"
+		_date=`date +%Y-%m-%d`
+		_time=`date +%H:%M:%S`
+		commit="$_date $_time 的提交"
 	fi
 
 	while read line
