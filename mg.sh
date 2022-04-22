@@ -141,6 +141,7 @@ else
 			password=${array[2]}
 
 			# 如果没有传入相关参数，则采用默认配置好的值
+			echo $lbranch, ${array[4]}, $rbranch, ${array[5]}
 			if [ ! -n "$lbranch" ]; then
 				lbranch=${array[4]}
 			fi
