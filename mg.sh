@@ -1,9 +1,25 @@
 #!/bin/bash
 
+# 首先判断是否在 git 工程的文件夹下
+[ -e ".git" ]
+isGitPrjFolder=$?
+if [[ $isGitPrjFolder -ne 0 ]]; then
+	pwd=`pwd`
+	echo "$pwd 不是一个 git 仓库"
+	exit
+fi
+
 inputStr="$@ " # 为了正则表达式的正确运行，最后加一个空格
 configFile="${HOME}/.mygit.config"
 
-getPara(){
+# 获得工程（文件夹）名
+getPrjName () {
+	pwd=`pwd`
+	echo ${pwd##*/} 
+}
+
+# 获得从 shell 脚本处获得的参数
+getInputPara(){
 	paraVal=`expr "$inputStr" : "$1"`
 	size=`expr length "$paraVal"`
 	cut=`expr $size - $2`
@@ -12,24 +28,25 @@ getPara(){
 	echo "$sub"
 }
 
+# 执行 pull 操作
 doPull () {
 	git pull $1 $2
 }
 
+# 执行 push 操作
 doPush () {
-	echo "1:", $1,"2:",  $2, "3:", $3, "4:", $4
 	git add .
 	git commit -m "$4"
-	git push $1 $3
+	if [ $2 = $3 ]; then
+		git push "$1" "$3" -u "$5" -p "$6"
+	else
+		git push "$1" "$2":"$3" -u "$5" -p "$6"
+	fi
 }
 
-if [ ! -n "$1" ]; then
-	echo "请输入参数"
-	exit
-fi
-
-if [ $1 = '-?' ];then
+if [ ! -n "$1" ] || [ $1 = '-?' ]; then
 	echo 'help'
+	exit
 elif [ $1 = 'set' ]; then
 	[ -e $configFile ]
 	confFileExists=$?
@@ -56,15 +73,19 @@ elif [ $1 = 'set' ]; then
 	fi
 
 	# 获得配置信息
-	repository=`getPara '.*\(\-r [^\-]* \)' 3` # 仓库名
-	username=`getPara '.*\(\-U [^\-]* \)' 3` # 用户名
-	password=`getPara '.*\(\-P [^\-]* \)' 3` # 密码
-	project=`getPara '.*\(\-p [^\-]* \)' 3` # 项目名
-	lbranch=`getPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
-	rbranch=`getPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
+	repository=`getInputPara '.*\(\-r [^\-]* \)' 3` # 仓库名
+	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
+	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码
+	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
+	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
+	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	readLine=''
 
 	# 在没有输入的时候，设置默认值
+	if [ ! -n "$project" ]; then
+		project=`getPrjName`
+	fi
+	
 	if [ ! -n "$lbranch" ]; then
 		lbranch='master'
 	fi
@@ -106,22 +127,21 @@ else
 		echo "请输入仓库名"
 		exit
 	fi
-	if [ ! -n "$3" ]; then
-		echo "请输入项目名"
-		exit
-	fi
 
 	# 定义配置
 	repository=$2 # 仓库
 	project=$3 # 项目
-	username=`getPara '.*\(\-U [^\-]* \)' 3` # 用户名
-	password=`getPara '.*\(\-P [^\-]* \)' 3` # 密码 
-	lbranch=`getPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
-	rbranch=`getPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
-	origin=`getPara '.*\(\-o [^\-]* \)' 3` # 远程仓库别名
-	commit=`getPara '.*\(\-m [^\-]* \)' 3` # 提交备注
-
+	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
+	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码 
+	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
+	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
+	origin=`getInputPara '.*\(\-o [^\-]* \)' 3` # 远程主机名
+	commit=`getInputPara '.*\(\-m [^\-]* \)' 3` # 提交备注
 	readExist=false
+
+	if [ ! -n "$project" ]; then
+		project=`getPrjName`
+	fi
 
 	if [ ! -n "$commit" ]; then
 		_date=`date +%Y-%m-%d`
@@ -166,12 +186,12 @@ else
 		exit
 	fi
 
+	# 采用函数的原因，是也可以获得返回值等方式
+	# 且每个处理各自独立，不会产生代码污染
 	if [ $1 = 'pull' ]; then
-		# 采用函数的原因，是也可以获得返回值等方式
-		# 且每个处理各自独立，不会产生代码污染
 		doPull "$origin" "$rbranch" 
 	elif [ $1 = 'push' ]; then
-		doPush "$origin" "$lbranch" "$rbranch" "$commit"
+		doPush "$origin" "$lbranch" "$rbranch" "$commit" "$username" "$passwor"
 	else
 		echo '非法的操作'
 	fi
