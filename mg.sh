@@ -130,7 +130,7 @@ else
 
 	# 定义配置
 	repository=$2 # 仓库
-	project=$3 # 项目
+	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码 
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
