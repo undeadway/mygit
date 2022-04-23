@@ -20,7 +20,7 @@
 | pull | repository | 仓库 | Y |
 | | -p project | 项目 | N |
 | | -o origin | 远程仓库别名 | N |
-| | -rb lbranch | 远程仓库 | N |
+| | -rb rbranch | 远程仓库 | N |
 | push | repository | 仓库 | Y |
 | | -p project | 项目 | N |
 | | -o origin | 远程仓库别名 | N |
