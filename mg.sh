@@ -30,8 +30,10 @@ doPull () {
 doPush () {
 
 	# 判断 git 的状态，如果已经是最新的，直接提交
-	status=`echo "git status" | grep "git add <"`
-	if  [[ $status != '' ]]; then	
+	status=`git status | grep "git add <"`
+	echo $status
+	if  [[ $status != '' ]]; then
+		echo 1
 		git add .
 		git commit -m "$4"
 	fi
@@ -130,7 +132,7 @@ else
 	
 	# 参数至少得包含仓库名
 	if [ ! -n "$2" ]; then
-		echo "请输入仓库名"
+		echo "参数至少要包含仓库名（第二个参数）"
 		exit
 	fi
 
