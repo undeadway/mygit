@@ -4,8 +4,8 @@
 [ -e ".git" ]
 isGitPrjFolder=$?
 if [[ $isGitPrjFolder -ne 0 ]]; then
-	pwd=`pwd`
-	echo "$pwd 不是一个 git 仓库"
+	str=`pwd`
+	echo "$str 不是一个 git 仓库"
 	exit
 fi
 
@@ -14,8 +14,8 @@ configFile="${HOME}/.mygit.config"
 
 # 获得工程（文件夹）名
 getPrjName () {
-	pwd=`pwd`
-	echo ${pwd##*/} 
+	str=`pwd`
+	echo ${str##*/} 
 }
 
 # 获得从 shell 脚本处获得的参数
@@ -38,10 +38,9 @@ doPush () {
 	git add .
 	git commit -m "$4"
 	if [ $2 = $3 ]; then
-		echo $1,$3
-		git push "$1" "$3" -u "$5" -p "$6"
+		git push "$1" "$3"
 	else
-		git push "$1" "$2":"$3" -u "$5" -p "$6"
+		git push "$1" "$2":"$3"
 	fi
 }
 
@@ -160,7 +159,6 @@ else
 			password=${array[2]}
 
 			# 如果没有传入相关参数，则采用默认配置好的值
-			echo $lbranch, ${array[4]}, $rbranch, ${array[5]}
 			if [ ! -n "$lbranch" ]; then
 				lbranch=${array[4]}
 			fi
