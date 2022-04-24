@@ -1,14 +1,6 @@
 #!/bin/bash
 
-# 首先判断是否在 git 工程的文件夹下
-[ -e ".git" ]
-isGitPrjFolder=$?
-if [[ $isGitPrjFolder -ne 0 ]]; then
-	str=`pwd`
-	echo "$str 不是一个 git 仓库"
-	exit
-fi
-
+version='0.0.1'
 inputStr="$@ " # 为了正则表达式的正确运行，最后加一个空格
 configFile="${HOME}/.mygit.config"
 
@@ -59,9 +51,30 @@ doPush () {
 	fi
 }
 
-if [ ! -n "$1" ] || [ $1 = '-?' ]; then
+# 一些预处理
+# 获得帮助
+if [ ! -n "$1" ] || [ $1 = '-?' ]  || [ $1 = '-h' ] || [ $1 = '--help' ]; then
 	echo 'help'
 	exit
+fi
+
+# 获得版本号
+if [ $1 = '-v' ] || [ $1 = '--version' ]; then
+	echo $version
+	exit
+fi
+
+# 首先判断是否在 git 工程的文件夹下
+[ -e ".git" ]
+isGitPrjFolder=$?
+if [[ $isGitPrjFolder -ne 0 ]]; then
+	str=`pwd`
+	echo "$str 不是一个 git 仓库"
+	exit
+fi
+
+if [ $1 = 'status' ]; then
+	git status
 elif [ $1 = 'set' ]; then
 	[ -e $configFile ]
 	confFileExists=$?
@@ -122,6 +135,7 @@ elif [ $1 = 'set' ]; then
 			esac
 	fi
 else
+	
 	# 参数至少得包含仓库名
 	if [ ! -n "$2" ]; then
 		echo "请输入仓库名"
