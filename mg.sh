@@ -1,7 +1,7 @@
 #!/bin/bash
 
 version='0.0.1'
-inputStr="$@ " # 为了正则表达式的正确运行，最后加一个空格
+inputStr=" $@ " # 为了正则表达式的正确运行，前后都加一个空格
 configFile="${HOME}/.mygit.config"
 
 # 获得工程（文件夹）名
@@ -17,6 +17,7 @@ getInputPara(){
 	cut=`expr $size - $2`
 	start=`expr $2 + 1`
 	sub=`expr substr "$paraVal" $start $cut`
+	sub=`echo $sub | xargs` # 去除字符串两端的空白
 	echo "$sub"
 }
 
