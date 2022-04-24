@@ -21,6 +21,11 @@ getInputPara(){
 	echo "$sub"
 }
 
+# 执行 pull 操作
+doPull () {
+	git pull $1 $2
+}
+
 # 执行 push 操作
 doPush () {
 
@@ -181,7 +186,7 @@ else
 	# 采用函数的原因，是也可以获得返回值等方式
 	# 且每个处理各自独立，不会产生代码污染
 	if [ $1 = 'pull' ]; then
-		git pull "$origin" "$rbranch" 
+		doPull "$origin" "$rbranch" 
 	elif [ $1 = 'push' ]; then
 		# 检查是否处于最新，如果是，则不提交
 		doPush "$origin" "$lbranch" "$rbranch" "$commit" "$username" "$passwor"
