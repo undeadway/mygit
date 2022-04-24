@@ -35,7 +35,7 @@ doPull () {
 
 chkGitStatus () {
 	str=`git status`
-	pat="git add"
+	pat="git add <"
 
 	res=`echo "$str" | grep "$pat"`
 
