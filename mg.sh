@@ -54,29 +54,27 @@ elif [ $1 = 'set' ]; then
 		touch $configFile
 	fi
 
-	# 至少得有仓库名、用户名、密码和项目名
-	if [ ! -n "$1" ]; then
-		echo "请输入仓库名"
-		exit
-	fi
-	if [ ! -n "$2" ]; then
-		echo "请输入用户名"
-		exit
-	fi
-	if [ ! -n "$3" ]; then
-		echo "请输入密码"
-		exit
-	fi
-	if [ ! -n "$4" ]; then
-		echo "请输入项目名"
-		exit
-	fi
 
 	# 获得配置信息
 	repository=`getInputPara '.*\(\-r [^\-]* \)' 3` # 仓库名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码
 	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
+
+	# 至少得有仓库名、用户名、密码
+	if [ ! -n "$repository" ]; then
+		echo "请输入仓库名"
+		exit
+	fi
+	if [ ! -n "$username" ]; then
+		echo "请输入用户名"
+		exit
+	fi
+	if [ ! -n "$password" ]; then
+		echo "请输入密码"
+		exit
+	fi
+
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
 	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	readLine=''
@@ -130,7 +128,7 @@ else
 
 	# 定义配置
 	repository=$2 # 仓库
-	project=$3 # 项目
+	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码 
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
