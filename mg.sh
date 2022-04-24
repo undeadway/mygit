@@ -33,10 +33,25 @@ doPull () {
 	git pull $1 $2
 }
 
+chkGitStatus () {
+	str=`git status`
+	pat="git add"
+
+	res=`echo "$str" | grep "$pat"`
+
+	echo $res
+}
+
 # 执行 push 操作
 doPush () {
-	git add .
-	git commit -m "$4"
+
+	# 判断 git 的状态，如果已经是最新的，直接提交
+	status=chkGitStatus
+	if  [[ $status != '' ]]; then	
+		git add .
+		git commit -m "$4"
+	fi
+
 	if [ $2 = $3 ]; then
 		git push "$1" "$3"
 	else
