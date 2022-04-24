@@ -21,19 +21,12 @@ getInputPara(){
 	echo "$sub"
 }
 
-# 执行 pull 操作
-doPull () {
-	git pull $1 $2
-}
-
 # 执行 push 操作
 doPush () {
 
 	# 判断 git 的状态，如果已经是最新的，直接提交
 	status=`git status | grep "git add <"`
-	echo $status
 	if  [[ $status != '' ]]; then
-		echo 1
 		git add .
 		git commit -m "$4"
 	fi
@@ -188,7 +181,7 @@ else
 	# 采用函数的原因，是也可以获得返回值等方式
 	# 且每个处理各自独立，不会产生代码污染
 	if [ $1 = 'pull' ]; then
-		doPull "$origin" "$rbranch" 
+		git pull "$origin" "$rbranch" 
 	elif [ $1 = 'push' ]; then
 		# 检查是否处于最新，如果是，则不提交
 		doPush "$origin" "$lbranch" "$rbranch" "$commit" "$username" "$passwor"
