@@ -91,7 +91,6 @@ elif [ $1 = 'set' ]; then
 
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
 	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
-	readLine=''
 
 	# 在没有输入的时候，设置默认值
 	if [ ! -n "$project" ]; then
@@ -105,20 +104,9 @@ elif [ $1 = 'set' ]; then
 	if [ ! -n "$rbranch" ]; then
 		rbranch=$lbranch
 	fi
+
 	# 先判断 repository 是否存在
-	while read line
-	do
-		if [ "$line" = '' ]; then
-			continue
-		fi
-
-		array=(${line// / })
-		if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
-			readLine=$line
-			break
-		fi
-	done < $configFile
-
+	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
 	output="${repository} ${username} ${password} ${project} ${lbranch} ${rbranch}"
 	if [ ! -n "$readLine" ]; then
 		#不存在则直接添加数据到文件
@@ -161,31 +149,25 @@ else
 		commit="$_date $_time 的提交"
 	fi
 
-	while read line
-	do
-		if [ "$line" = '' ]; then
-			continue
-		fi
+	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
+	array=(${readLine// / })
 
-		array=(${line// / })
-		if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
-			readExist=true
-			username=${array[1]}
-			password=${array[2]}
+	if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
+		readExist=true
+		username=${array[1]}
+		password=${array[2]}
 
-			# 如果没有传入相关参数，则采用默认配置好的值
-			if [ ! -n "$lbranch" ]; then
-				lbranch=${array[4]}
-			fi
-			if [ ! -n "$rbranch" ]; then
-				rbranch=${array[5]}
-			fi
-			if [ ! -n "$origin" ]; then
-				origin=${array[6]}
-			fi
-			break
+		# 如果没有传入相关参数，则采用默认配置好的值
+		if [ ! -n "$lbranch" ]; then
+			lbranch=${array[4]}
 		fi
-	done < $configFile
+		if [ ! -n "$rbranch" ]; then
+			rbranch=${array[5]}
+		fi
+		if [ ! -n "$origin" ]; then
+			origin=${array[6]}
+		fi
+	fi
 
 	if [ ! -n "$origin" ]; then
 		origin='origin'
