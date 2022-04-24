@@ -3,7 +3,7 @@
 一个在每次命令行操作 git 的时候，不需要重复输入用户名、密码的脚本  
 操作包括 git 的全部操作，以及自定义操作
 
-什么，你说 `git config --global credential.helper store` ？ 
+什么，你说 `git config --global credential.helper store` ？   
 我不知道，我没看见！
 
 # 注意
