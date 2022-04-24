@@ -38,10 +38,9 @@ doPush () {
 	git add .
 	git commit -m "$4"
 	if [ $2 = $3 ]; then
-		echo 2
+		echo $1,$3
 		git push "$1" "$3" -u "$5" -p "$6"
 	else
-		echo 1
 		git push "$1" "$2":"$3" -u "$5" -p "$6"
 	fi
 }
