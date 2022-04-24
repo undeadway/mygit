@@ -54,8 +54,7 @@ elif [ $1 = 'set' ]; then
 		touch $configFile
 	fi
 
-
-	# 获得配置信息
+	# 获得参数信息
 	repository=`getInputPara '.*\(\-r [^\-]* \)' 3` # 仓库名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码
@@ -63,15 +62,15 @@ elif [ $1 = 'set' ]; then
 
 	# 至少得有仓库名、用户名、密码
 	if [ ! -n "$repository" ]; then
-		echo "请输入仓库名"
+		echo "请输入仓库名（参数 -r）"
 		exit
 	fi
 	if [ ! -n "$username" ]; then
-		echo "请输入用户名"
+		echo "请输入用户名（参数 -U）"
 		exit
 	fi
 	if [ ! -n "$password" ]; then
-		echo "请输入密码"
+		echo "请输入密码（参数 -P）"
 		exit
 	fi
 
@@ -120,13 +119,13 @@ elif [ $1 = 'set' ]; then
 			esac
 	fi
 else
-	# 参数至少得包含仓库名项目名
+	# 参数至少得包含仓库名
 	if [ ! -n "$2" ]; then
 		echo "请输入仓库名"
 		exit
 	fi
 
-	# 定义配置
+	# 获得参数信息
 	repository=$2 # 仓库
 	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
