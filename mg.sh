@@ -137,7 +137,6 @@ else
 	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	origin=`getInputPara '.*\(\-o [^\-]* \)' 3` # 远程主机名
 	commit=`getInputPara '.*\(\-m [^\-]* \)' 3` # 提交备注
-	readExist=false
 
 	if [ ! -n "$project" ]; then
 		project=`getPrjName`
@@ -150,6 +149,11 @@ else
 	fi
 
 	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
+	if [ ! -n "$readLine" ]; then
+		echo "仓库：${repository} 、项目：${project} 的配置未定义，请先定义配置。"
+		exit
+	fi
+
 	array=(${readLine// / })
 
 	if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
@@ -171,11 +175,6 @@ else
 
 	if [ ! -n "$origin" ]; then
 		origin='origin'
-	fi
-
-	if [ readExist = false ]; then
-		echo "仓库：${repository} 、项目：${project} 的配置未定义，请先定义配置。"
-		exit
 	fi
 
 	# 采用函数的原因，是也可以获得返回值等方式
