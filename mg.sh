@@ -190,6 +190,7 @@ else
 	if [ $1 = 'pull' ]; then
 		doPull "$origin" "$rbranch" 
 	elif [ $1 = 'push' ]; then
+		# 检查是否处于最新，如果是，则不提交
 		doPush "$origin" "$lbranch" "$rbranch" "$commit" "$username" "$passwor"
 	else
 		echo '非法的操作'
