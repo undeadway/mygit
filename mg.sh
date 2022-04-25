@@ -75,16 +75,10 @@ elif [ $1 = 'set' ]; then
 	fi
 
 	# 获得参数信息
-	repository=`getInputPara '.*\(\-r [^\-]* \)' 3` # 仓库名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码
-	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
 
-	# 至少得有仓库名、用户名、密码
-	if [ ! -n "$repository" ]; then
-		echo "请输入仓库名（参数 -r）"
-		exit
-	fi
+	# 必须得有用户名、密码
 	if [ ! -n "$username" ]; then
 		echo "请输入用户名（参数 -U）"
 		exit
@@ -112,7 +106,7 @@ elif [ $1 = 'set' ]; then
 
 	# 先判断 repository 是否存在
 	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
-	output="${repository} ${username} ${password} ${project} ${lbranch} ${rbranch}"
+	output="${project} ${username} ${password} ${lbranch} ${rbranch}"
 	if [ ! -n "$readLine" ]; then
 		#不存在则直接添加数据到文件
 		echo "$output" >> $configFile
@@ -135,8 +129,7 @@ else
 	fi
 
 	# 获得参数信息
-	repository=$2 # 仓库
-	project=`getInputPara '.*\(\-p [^\-]* \)' 3` # 项目名
+	project=`getPrjName` # 项目名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
 	password=`getInputPara '.*\(\-P [^\-]* \)' 3` # 密码 
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
@@ -144,43 +137,37 @@ else
 	origin=`getInputPara '.*\(\-o [^\-]* \)' 3` # 远程主机名
 	commit=`getInputPara '.*\(\-m [^\-]* \)' 3` # 提交备注
 
-	if [ ! -n "$project" ]; then
-		project=`getPrjName`
-	fi
-
 	if [ ! -n "$commit" ]; then
 		_date=`date +%Y-%m-%d`
 		_time=`date +%H:%M:%S`
 		commit="$_date $_time 的提交"
 	fi
 
-	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
+	readLine=`cat "$configFile" | grep -E "$project"`
 	if [ ! -n "$readLine" ]; then
-		echo "仓库：${repository} 、项目：${project} 的配置未定义，请先定义配置。"
+		echo "项目：${project} 的配置未定义，请先定义配置。"
 		exit
 	fi
 
 	array=(${readLine// / })
 
-	if [ "${array[0]}" = "$repository" ] && [ "${array[3]}" = "$project" ]; then
-		readExist=true
-		username=${array[1]}
-		password=${array[2]}
+	# project username password lbranch rbranch origin
+	username=${array[1]}
+	password=${array[2]}
 
-		# 如果没有传入相关参数，则采用默认配置好的值
-		if [ ! -n "$lbranch" ]; then
-			lbranch=${array[4]}
-		fi
-		if [ ! -n "$rbranch" ]; then
-			rbranch=${array[5]}
-		fi
-		if [ ! -n "$origin" ]; then
-			origin=${array[6]}
-		fi
+	# 如果没有传入相关参数，则采用默认配置好的值
+	if [ ! -n "$lbranch" ]; then
+		lbranch=${array[3]}
 	fi
-
+	if [ ! -n "$rbranch" ]; then
+		rbranch=${array[4]}
+	fi
 	if [ ! -n "$origin" ]; then
-		origin='origin'
+		if [ ! -n  "${array[5]}" ]; then
+			origin=${array[5]}
+		else
+			origin='origin' # 在没有参数输入和配置的情况下，origin 采用默认值
+		fi
 	fi
 
 	# 采用函数的原因，是也可以获得返回值等方式
