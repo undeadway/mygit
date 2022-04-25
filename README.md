@@ -20,19 +20,22 @@ git commit xxx
 
 # 操作
 
-| 命令名 | 参数 | 参数解释 | 必须 | 默认值 |
-| -- | -- | -- | -- | -- |
-| set | -p project | 项目 | Y | - |
-| | -U username | 用户名 | Y | - |
-| | -P password | 密码 | Y | - |
-| | -lb lbranch | 本地分支 | N | master |
-| | -rb rbranch | 远程分支 | N | master |
-| pull | -p project | 项目 | N | 对应的文件夹名称 |
-| | -o origin | 远程主机名 | N | origin |
-| | -lb lbranch | 本地分支 | N | 配置的值 |
-| | -rb rbranch | 远程分支 | N  | 配置的值 |
-| push | -p project | 项目 | N  | 对应的文件夹名称 |
-| | -o origin | 远程主机名 | N | origin |
-| | -lb lbranch | 本地分支 | N | 配置的值 |
-| | -rb lbranch | 远程分支 | N  | 配置的值 |
-| | -m commit | 提交备注 | N  | 配置的值 |
+| 命令名 | 参数 | 参数解释 | 必须 | 默认值 | 备注 |
+| -- | -- | -- | -- | -- | -- |
+| status | -- | -- | -- | -- | 同 `git status` |
+| -v --version | -- | -- | -- | -- | 获得版本号 |
+| -h --help -? | -- | -- | -- | -- | 获得帮助，不输入参数也可获得帮助 |
+| set | -p project | 项目 | Y | - | |
+| | -U username | 用户名 | Y | - | |
+| | -P password | 密码 | Y | - | |
+| | -lb lbranch | 本地分支 | N | master | |
+| | -rb rbranch | 远程分支 | N | master | |
+| pull | -p project | 项目 | N | 对应的文件夹名称 | |
+| | -o origin | 远程主机名 | N | origin | |
+| | -lb lbranch | 本地分支 | N | 配置的值 | |
+| | -rb rbranch | 远程分支 | N  | 配置的值 | |
+| push | -p project | 项目 | N  | 对应的文件夹名称 | |
+| | -o origin | 远程主机名 | N | origin | |
+| | -lb lbranch | 本地分支 | N | 配置的值 | |
+| | -rb lbranch | 远程分支 | N  | 配置的值 | |
+| | -m commit | 提交备注 | N  | 配置的值 | |
