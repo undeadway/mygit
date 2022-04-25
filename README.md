@@ -6,6 +6,13 @@
 什么，你说 `git config --global credential.helper store` ？   
 我不知道，我没看见！
 
+而且就算少输入
+```
+git add .
+git commit xxx
+```
+也是好的嘛～
+
 # 注意
 
  1. 该脚本使用前，必须先 cd 到对应的工程目录下
@@ -13,16 +20,19 @@
 
 # 操作
 
-| 命令名 | 参数 | 参数解释 | 必须 |
-| -- | -- | -- | -- |
-| set | -p project | 项目 | Y |
-| | -U username | 用户名 | Y |
-| | -P password | 密码 | Y |
-| | -lb lbranch | 本地分支 | N（默认值：master） |
-| | -rb rbranch | 远程分支 | N（默认值：master） |
-| pull | -o origin | 远程仓库别名 | N |
-| | -rb rbranch | 远程仓库 | N |
-| push | -o origin | 远程仓库别名 | N |
-| | -lb lbranch | 本地仓库 | N |
-| | -rb lbranch | 远程仓库 | N |
-| | -c commit | 提交备注 | N |
+| 命令名 | 参数 | 参数解释 | 必须 | 默认值 |
+| -- | -- | -- | -- | -- |
+| set | -p project | 项目 | Y | - |
+| | -U username | 用户名 | Y | - |
+| | -P password | 密码 | Y | - |
+| | -lb lbranch | 本地分支 | N | master |
+| | -rb rbranch | 远程分支 | N | master |
+| pull | -p project | 项目 | N | 对应的文件夹名称 |
+| | -o origin | 远程主机名 | N | origin |
+| | -lb lbranch | 本地分支 | N | 配置的值 |
+| | -rb rbranch | 远程分支 | N  | 配置的值 |
+| push | -p project | 项目 | N  | 对应的文件夹名称 |
+| | -o origin | 远程主机名 | N | origin |
+| | -lb lbranch | 本地分支 | N | 配置的值 |
+| | -rb lbranch | 远程分支 | N  | 配置的值 |
+| | -m commit | 提交备注 | N  | 配置的值 |
