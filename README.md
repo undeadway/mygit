@@ -38,4 +38,4 @@ git commit xxx
 | | -o origin | 远程主机名 | N | origin | |
 | | -lb lbranch | 本地分支 | N | 配置的值 | |
 | | -rb lbranch | 远程分支 | N  | 配置的值 | |
-| | -m commit | 提交备注 | N  | 配置的值 | |
+| | -m commit | 提交备注 | N  | "${当前时间}的提交" | |
