@@ -120,12 +120,6 @@ elif [ $1 = 'set' ]; then
 			esac
 	fi
 else
-	
-	# 参数至少得包含仓库名
-	if [ ! -n "$2" ]; then
-		echo "参数至少要包含仓库名（第二个参数）"
-		exit
-	fi
 
 	# 获得参数信息
 	project=`getPrjName` # 项目名
