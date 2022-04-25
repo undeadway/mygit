@@ -164,8 +164,10 @@ else
 	fi
 	if [ ! -n "$origin" ]; then
 		if [ ! -n  "${array[5]}" ]; then
+		echo 1
 			origin=${array[5]}
 		else
+		echo 2
 			origin='origin' # 在没有参数输入和配置的情况下，origin 采用默认值
 		fi
 	fi
