@@ -49,7 +49,6 @@ if [ ! -n "$1" ] || [ $1 = '-?' ]  || [ $1 = '-h' ] || [ $1 = '--help' ]; then
 	echo 'help'
 	exit
 fi
-
 # 获得版本号
 if [ $1 = '-v' ] || [ $1 = '--version' ]; then
 	echo $version
