@@ -28,7 +28,6 @@ doPull () {
 
 # 执行 push 操作
 doPush () {
-
 	# 判断 git 的状态，如果已经是最新的，直接提交
 	status=`git status | grep "git add <"`
 	if  [[ $status != '' ]]; then
@@ -41,6 +40,9 @@ doPush () {
 	else
 		git push "$1" "$2":"$3"
 	fi
+
+	# 如果需要的话，输入密码
+	# TODO
 }
 
 # 一些预处理
@@ -89,6 +91,7 @@ elif [ $1 = 'set' ]; then
 
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
 	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
+	origin=`getInputPara '.*\(\-o [^\-]* \)' 3` # 远程主机名
 
 	# 在没有输入的时候，设置默认值
 	if [ ! -n "$project" ]; then
@@ -103,9 +106,13 @@ elif [ $1 = 'set' ]; then
 		rbranch=$lbranch
 	fi
 
+	if [ ! -n "$origin" ]; then
+		origin="origin"
+	fi
+
 	# 先判断 repository 是否存在
 	readLine=`cat "$configFile" | grep -E "$repository .* $project"`
-	output="${project} ${username} ${password} ${lbranch} ${rbranch}"
+	output="${project} ${username} ${password} ${lbranch} ${rbranch} ${origin}"
 	if [ ! -n "$readLine" ]; then
 		#不存在则直接添加数据到文件
 		echo "$output" >> $configFile
@@ -120,7 +127,6 @@ elif [ $1 = 'set' ]; then
 			esac
 	fi
 else
-
 	# 获得参数信息
 	project=`getPrjName` # 项目名
 	username=`getInputPara '.*\(\-U [^\-]* \)' 3` # 用户名
@@ -144,7 +150,7 @@ else
 
 	array=(${readLine// / })
 
-	# project username password lbranch rbranch origin
+	# 配置顺序：project username password lbranch rbranch origin
 	username=${array[1]}
 	password=${array[2]}
 
