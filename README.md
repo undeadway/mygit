@@ -31,11 +31,11 @@ git commit xxx
 | | -lb lbranch | 本地分支 | N | master | |
 | | -rb rbranch | 远程分支 | N | master | |
 | pull | -p project | 项目 | N | 对应的文件夹名称 | |
-| | -o origin | 远程主机名 | N | 配置的值，若没有配置则为 origin | |
-| | -lb lbranch | 本地分支 | N | 配置的值，若没有配置则为 master | |
-| | -rb rbranch | 远程分支 | N  | 配置的值，若没有配置则为 master | |
+| | -o origin | 远程主机名 | N | 配置的值 | |
+| | -lb lbranch | 本地分支 | N | 配置的值 | |
+| | -rb rbranch | 远程分支 | N  | 配置的值 | |
 | push | -p project | 项目 | N  | 对应的文件夹名称 | |
-| | -o origin | 远程主机名 | N | 配置的值，若没有配置则为 origin | |
-| | -lb lbranch | 本地分支 | N | 配置的值，若没有配置则为 master | |
-| | -rb lbranch | 远程分支 | N  | 配置的值，若没有配置则为 master | |
+| | -o origin | 远程主机名 | N | 配置的值 | |
+| | -lb lbranch | 本地分支 | N | 配置的值 | |
+| | -rb lbranch | 远程分支 | N  | 配置的值 | |
 | | -m commit | 提交备注 | N  | "${当前时间}的提交" | |
