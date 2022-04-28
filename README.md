@@ -27,14 +27,14 @@ git commit xxx
 | -h / --help / -? | - | - | - | - | 获得帮助，不输入任何参数也是同样的效果 |
 | set | -U username | 用户名 | Y | - | |
 | | -P password | 密码 | Y | - | |
-| | -p project | 项目 | N | - | |
+| | -p project | 项目 | N | 对应的文件夹名称 | |
 | | -lb lbranch | 本地分支 | N | master | |
 | | -rb rbranch | 远程分支 | N | master | |
-| pull | -p project | 项目 | N | 对应的文件夹名称 | |
+| pull | -p project | 项目 | N | 配置的值 | |
 | | -o origin | 远程主机名 | N | 配置的值 | |
 | | -lb lbranch | 本地分支 | N | 配置的值 | |
 | | -rb rbranch | 远程分支 | N  | 配置的值 | |
-| push | -p project | 项目 | N  | 对应的文件夹名称 | |
+| push | -p project | 项目 | N  | 配置的值 | |
 | | -o origin | 远程主机名 | N | 配置的值 | |
 | | -lb lbranch | 本地分支 | N | 配置的值 | |
 | | -rb lbranch | 远程分支 | N  | 配置的值 | |
