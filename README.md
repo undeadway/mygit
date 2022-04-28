@@ -27,7 +27,7 @@ git commit xxx
 | -h / --help / -? | - | - | - | - | 获得帮助，不输入任何参数也是同样的效果 |
 | set | -U username | 用户名 | Y | - | |
 | | -P password | 密码 | Y | - | |
-| | -p project | 项目 | N | 对应的文件夹名称 | |
+| | -p project | 项目 | N | 工程所在的文件夹名 | |
 | | -lb lbranch | 本地分支 | N | master | |
 | | -rb rbranch | 远程分支 | N | master | |
 | pull | -p project | 项目 | N | 配置的值 | |
