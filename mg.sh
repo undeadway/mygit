@@ -89,6 +89,7 @@ elif [ $1 = 'set' ]; then
 		exit
 	fi
 
+	project=`getInputPara '.*\(\-lp [^\-]* \)' 4` # 项目名
 	lbranch=`getInputPara '.*\(\-lb [^\-]* \)' 4` # 本地分支
 	rbranch=`getInputPara '.*\(\-rb [^\-]* \)' 4` # 远程分支
 	origin=`getInputPara '.*\(\-o [^\-]* \)' 3` # 远程主机名

@@ -16,7 +16,7 @@ git commit xxx
 ## 注意事项
 
  1. 该脚本使用前，必须先 cd 到对应的工程目录下（获得帮助和版本号不用）
- 2. 所有项目都要在自己的根目录下配置（有 .git 文件夹）  
+ 2. 所有项目都要在自己的根目录下配置（有 .git 文件夹）
 
 ## 操作详解
 
@@ -25,9 +25,9 @@ git commit xxx
 | status | - | - | - | - | 同 `git status` |
 | -v / --version | - | - | - | - | 获得版本号 |
 | -h / --help / -? | - | - | - | - | 获得帮助，不输入任何参数也是同样的效果 |
-| set | -p project | 项目 | Y | - | |
-| | -U username | 用户名 | Y | - | |
+| set | -U username | 用户名 | Y | - | |
 | | -P password | 密码 | Y | - | |
+| | -p project | 项目 | N | - | |
 | | -lb lbranch | 本地分支 | N | master | |
 | | -rb rbranch | 远程分支 | N | master | |
 | pull | -p project | 项目 | N | 对应的文件夹名称 | |
