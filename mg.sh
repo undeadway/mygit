@@ -7,7 +7,7 @@ configFile="${HOME}/.mygit.config"
 # 获得工程（文件夹）名
 getPrjName () {
 	str=`pwd`
-	echo ${str##*/} 
+	echo ${str##*/}
 }
 
 # 获得从 shell 脚本处获得的参数
@@ -30,6 +30,7 @@ doPull () {
 doPush () {
 	# 判断 git 的状态，如果已经是最新的，直接提交
 	status=`git status | grep "git add <"`
+
 	if  [[ $status != '' ]]; then
 		git add .
 		git commit -m "$4"
@@ -66,7 +67,10 @@ if [[ $isGitPrjFolder -ne 0 ]]; then
 	exit
 fi
 
-if [ $1 = 'status' ]; then
+if [ $1 = 'init' ]; then
+	git init
+	touch .gitignore
+elif [ $1 = 'status' ]; then
 	git status
 elif [ $1 = 'set' ]; then
 	[ -e $configFile ]
@@ -120,12 +124,12 @@ elif [ $1 = 'set' ]; then
 	else
 		# 如果存在，则提示是否需要覆盖
 		read -p "仓库：${repository} 、项目：${project} 的配置已经存在，是否要覆盖？（y/n）：" input
-			case $input in
-				[yY]) # 大小写的 Y 都可以
-					sed -i "s/$readLine/$output/g" $configFile
-					;;
-				# y 以外，不管输入什么都当是不要处理
-			esac
+		case $input in
+			[yY]) # 大小写的 Y 都可以
+				sed -i "s/$readLine/$output/g" $configFile
+				;;
+			# y 以外，不管输入什么都当是不要处理
+		esac
 	fi
 else
 	# 获得参数信息
